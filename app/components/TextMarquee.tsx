@@ -7,76 +7,70 @@ interface TextMarqueeProps {
 }
 
 export default function TextMarquee({ messages }: TextMarqueeProps) {
-  // Triple the items array to ensure a dense layout stream without white space gaps
+  // Triple the data array to guarantee an infinite continuous loop structure with zero structural layout gaps
   const loopMessages = [...messages, ...messages, ...messages];
 
   return (
-    <div className="w-full bg-[#0A0A0C] py-12 overflow-hidden flex flex-col gap-6 relative select-none">
+    <div className="w-full bg-[#0A0A0C] py-6 flex flex-col gap-2 relative select-none">
       
-      {/* Injecting explicit native animation keyframes directly into the DOM structure */}
+      {/* 
+        1. Injecting hidden-scrollbar configurations 
+        2. Seamless infinite loop keyframe calculations 
+      */}
       <style dangerouslySetInnerHTML={{__html: `
-        @keyframes marqueeLeft {
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        @keyframes singleLineMarquee {
           0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+          100% { transform: translateX(-33.33%); }
         }
-        @keyframes marqueeRight {
-          0% { transform: translateX(-50%); }
-          100% { transform: translateX(0); }
-        }
-        .animate-marquee-left {
-          animation: marqueeLeft 35s linear infinite;
-        }
-        .animate-marquee-right {
-          animation: marqueeRight 40s linear infinite;
+        .animate-hybrid-marquee {
+          animation: singleLineMarquee 40s linear infinite;
         }
       `}} />
 
-      {/* Subtle fade edges for screen space masking */}
-      <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#0A0A0C] to-transparent z-10 pointer-events-none" />
-      <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#0A0A0C] to-transparent z-10 pointer-events-none" />
+      {/* Cinematic gradient vignette fade masking edges */}
+      <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-[#0A0A0C] via-[#0A0A0C]/40 to-transparent z-10 pointer-events-none" />
+      <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-[#0A0A0C] via-[#0A0A0C]/40 to-transparent z-10 pointer-events-none" />
 
-      {/* TRACK 1: LEFT TRACK DIRECTIONAL CYCLE */}
-      <div className="flex overflow-hidden relative w-full">
-        <div className="flex gap-6 whitespace-nowrap animate-marquee-left hover:[animation-play-state:paused]">
+      <span className="text-[10px] font-mono text-zinc-600 px-4 tracking-wider uppercase mb-1">
+        // Roll Credits — Auto-scrolls // Hover to pause & swipe manually
+      </span>
+
+      {/* 
+        The Scroll Container: 
+        - Auto-scrolls infinitely via CSS 
+        - 'hover:[animation-play-state:paused]' stalls it instantly 
+        - 'overflow-x-auto' handles manual touch swipe momentum concurrently
+      */}
+      <div className="w-full overflow-x-auto no-scrollbar active:cursor-grabbing cursor-grab py-2">
+        <div className="flex gap-4 px-6 w-max animate-hybrid-marquee hover:[animation-play-state:paused]">
           {loopMessages.map((item, idx) => (
             <div 
-              key={`left-${idx}`}
-              className="inline-flex bg-zinc-900/50 border border-zinc-800/80 px-6 py-4 rounded-xl items-center gap-4 w-[360px] whitespace-normal backdrop-blur-sm flex-shrink-0"
+              key={`hybrid-cell-${idx}`}
+              className="bg-zinc-900/50 border border-zinc-800/80 px-6 py-4 rounded-xl flex items-center gap-4 w-[350px] flex-shrink-0 transition-all duration-300 hover:border-[#E5A93C]/40 hover:bg-zinc-900/90 hover:scale-[1.01]"
             >
+              {/* Profile Frame Image Asset */}
               <div className="flex-shrink-0 w-12 h-12 rounded-full border border-zinc-700 overflow-hidden bg-zinc-800">
                 <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
               </div>
-              <div>
+              
+              {/* Message Block Area */}
+              <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2 mb-0.5">
-                  <span className="font-bold text-sm text-white">{item.name}</span>
-                  <span className="text-[10px] text-[#E5A93C] font-mono tracking-wider bg-[#E5A93C]/10 px-1.5 py-0.5 rounded">
+                  <span className="font-bold text-sm text-white truncate">{item.name}</span>
+                  <span className="text-[9px] text-[#E5A93C] font-mono tracking-wider bg-[#E5A93C]/10 px-1.5 py-0.5 rounded whitespace-nowrap">
                     {item.relation.split(' ')[0]}
                   </span>
                 </div>
-                <p className="text-xs text-zinc-400 line-clamp-2 italic">"{item.msg}"</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* TRACK 2: RIGHT TRACK DIRECTIONAL CYCLE */}
-      <div className="flex overflow-hidden relative w-full">
-        <div className="flex gap-6 whitespace-nowrap animate-marquee-right hover:[animation-play-state:paused]">
-          {[...loopMessages].reverse().map((item, idx) => (
-            <div 
-              key={`right-${idx}`}
-              className="inline-flex bg-zinc-900/20 border border-zinc-900/60 px-6 py-4 rounded-xl items-center gap-4 w-[360px] whitespace-normal flex-shrink-0"
-            >
-              <div className="flex-shrink-0 w-12 h-12 rounded-full border border-zinc-800 overflow-hidden bg-zinc-900">
-                <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2 mb-0.5">
-                  <span className="font-bold text-sm text-zinc-400">{item.name}</span>
-                  <MessageCircle size={10} className="text-zinc-600" />
-                </div>
-                <p className="text-xs text-zinc-500 line-clamp-2 italic">"{item.msg}"</p>
+                <p className="text-xs text-zinc-400 line-clamp-2 italic leading-relaxed">
+                  "{item.msg}"
+                </p>
               </div>
             </div>
           ))}

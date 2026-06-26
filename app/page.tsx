@@ -18,14 +18,15 @@ export default function BirthdayProject() {
     { name: "Shamita", relation: "The Co-Actor in Life", msg: "Having yash in my life is like behind the scene cameras that catches me at my embarrassing moments🤣", img: "/shamita.jpeg" },
     { name: "Viraj", relation: "The Co-Actor in Life", msg: "Aata ha motha houn surya honar ka?? A personal cure for depression. Whenever I feel low/depressed, I call him. For a moment I just let go of my worries, listen to his stories and enter the magical world of Punna. He's not my friend, he's my brother♥️", img: "/viraj.jpeg" },
     { name: "AAshka", relation: "The Co-Actor in Life", msg: "Having Yash in my life is basically like having an older brother that you just keep fighting with and bantering with. Always making fun of each other and playfully fighting but deep down we also know that we can always rely on each other 🥰🫶🏻", img: "/aashka.jpeg" },
+    { name: "Rahul", relation: "The Co-Actor in Life", msg: "Happy Birthday, Yash! (Mashked)🎉 Wishing you an amazing day filled with happiness, laughter, and great memories. You’re not just a friend, you’re like family always there, always supportive, and always bringing good vibes. I’m really lucky to have you as my best friend. May this year bring you success, good health, and everything you’ve been working for. Let’s keep making more unforgettable moments together. 🚗✨", img: "/rahul.jpeg" },
   ];
 
   const friendMessages: MessageItem[] = [
-    { name: "Rahul", relation: "The Joey to my Chandler", msg: "Could you BE any older? Cheers to 27 years of movie marathons and chaos.", img: "/api/placeholder/600/600" },
+    { name: "Hema pinni", relation: "The Joey to my Chandler", msg: "You always take care of everyone, and we are lucky to have you.", img: "/api/placeholder/600/600" },
+    { name: "Aruna pinni", relation: "The Cinephile Crew", msg: "You are the biggest support of our family.", img: "/api/placeholder/800/500" },
+    { name: "Akash(Sky)", relation: "The Cinephile Crew", msg: "Some memories from the “Shanti Kaksh” are secrets that only Yash and I share.", img: "/api/placeholder/800/500" },
+    { name: "Sangeeta pinni", relation: "The Cinephile Crew", msg: "Your love, kindness, and support make our family stronger every single day.", img: "/api/placeholder/800/500" },
     { name: "Ananya", relation: "The Cinephile Crew", msg: "Happy Birthday! May your 27th year have the scale of a Tollywood blockbuster and the heart of a classic.", img: "/api/placeholder/800/500" },
-        { name: "Ananya", relation: "The Cinephile Crew", msg: "Happy Birthday! May your 27th year have the scale of a Tollywood blockbuster and the heart of a classic.", img: "/api/placeholder/800/500" },
-            { name: "Ananya", relation: "The Cinephile Crew", msg: "Happy Birthday! May your 27th year have the scale of a Tollywood blockbuster and the heart of a classic.", img: "/api/placeholder/800/500" },
-                { name: "Ananya", relation: "The Cinephile Crew", msg: "Happy Birthday! May your 27th year have the scale of a Tollywood blockbuster and the heart of a classic.", img: "/api/placeholder/800/500" },
   ];
 
   return (
