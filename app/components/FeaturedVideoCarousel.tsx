@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { Volume2, VolumeX, Clapperboard } from 'lucide-react';
 import { VideoItem } from '../types';
 
@@ -9,31 +9,50 @@ interface FeaturedVideoCarouselProps {
 }
 
 export default function FeaturedVideoCarousel({ videos }: FeaturedVideoCarouselProps) {
-  const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
+  const [activeKey, setActiveKey] = useState<string | null>(null);
   const videoRefs = useRef<{ [key: string]: HTMLVideoElement | null }>({});
 
   // Triple the items to ensure a seamless infinite marquee track without empty gaps
   const loopVideos = [...videos, ...videos, ...videos];
 
-  // Dynamically mute/unmute videos based on which card ID is currently active
-  useEffect(() => {
-    Object.keys(videoRefs.current).forEach((id) => {
-      const videoElement = videoRefs.current[id];
-      if (videoElement) {
-        videoElement.muted = activeVideoId !== id;
-      }
-    });
-  }, [activeVideoId]);
-
   const handleVideoTap = (uniqueIndexKey: string) => {
-    // If tapped again, mute it. Otherwise, unmute this specific video.
-    setActiveVideoId(activeVideoId === uniqueIndexKey ? null : uniqueIndexKey);
+    const videoElement = videoRefs.current[uniqueIndexKey];
+    if (!videoElement) return;
+
+    if (activeKey === uniqueIndexKey) {
+      // Tapped again: Mute it
+      videoElement.muted = true;
+      setActiveKey(null);
+    } else {
+      // Mute all other videos first
+      Object.keys(videoRefs.current).forEach((key) => {
+        if (videoRefs.current[key]) videoRefs.current[key]!.muted = true;
+      });
+      // Unmute this specific one
+      videoElement.muted = false;
+      setActiveKey(uniqueIndexKey);
+    }
+  };
+
+  const handleMouseEnter = (uniqueIndexKey: string) => {
+    const videoElement = videoRefs.current[uniqueIndexKey];
+    if (videoElement) {
+      videoElement.muted = false;
+      setActiveKey(uniqueIndexKey);
+    }
+  };
+
+  const handleMouseLeave = (uniqueIndexKey: string) => {
+    const videoElement = videoRefs.current[uniqueIndexKey];
+    if (videoElement) {
+      videoElement.muted = true;
+      setActiveKey(null);
+    }
   };
 
   return (
     <div className="w-full bg-[#0A0A0C] py-8 flex flex-col gap-4 relative select-none border-b border-zinc-900/60">
       
-      {/* Scrollbar overrides and layout animation keyframes */}
       <style dangerouslySetInnerHTML={{__html: `
         .no-scrollbar::-webkit-scrollbar {
           display: none;
@@ -64,27 +83,31 @@ export default function FeaturedVideoCarousel({ videos }: FeaturedVideoCarouselP
 
       {/* Main Track Element */}
       <div className="w-full overflow-x-auto no-scrollbar active:cursor-grabbing cursor-grab py-2">
-        <div className="flex gap-4 px-6 w-max animate-video-marquee hover:[animation-play-state:paused]">
+        <div className="flex gap-4 px-6 w-max animate-video-marquee">
           {loopVideos.map((item, idx) => {
             const uniqueKey = `${item.id}-${idx}`;
-            const isUnmuted = activeVideoId === uniqueKey;
+            const isUnmuted = activeKey === uniqueKey;
 
             return (
               <div 
                 key={uniqueKey}
                 onClick={() => handleVideoTap(uniqueKey)}
-                onMouseEnter={() => setActiveVideoId(uniqueKey)}
-                onMouseLeave={() => setActiveVideoId(null)}
+                onMouseEnter={() => handleMouseEnter(uniqueKey)}
+                onMouseLeave={() => handleMouseLeave(uniqueKey)}
                 className="relative bg-zinc-900 rounded-xl overflow-hidden h-[380px] w-[240px] md:h-[440px] md:w-[280px] flex-shrink-0 border border-zinc-800/80 transition-all duration-500 hover:border-[#E5A93C]/40 hover:scale-[1.01] shadow-xl group"
               >
-                {/* Core HTML5 Autoplay Loops */}
+                {/* 
+                  Core HTML5 Autoplay Loops:
+                  Completely disconnected from React lifecycle state triggers for playback.
+                  It stays playing infinitely in the DOM canvas without checking state.
+                */}
                 <video 
                   ref={(el) => { videoRefs.current[uniqueKey] = el; }}
                   src={item.videoUrl}
                   className="w-full h-full object-cover opacity-85 group-hover:opacity-100 transition-opacity duration-300"
                   autoPlay
                   loop
-                  muted={!isUnmuted}
+                  muted
                   playsInline
                 />
 
@@ -97,7 +120,7 @@ export default function FeaturedVideoCarousel({ videos }: FeaturedVideoCarouselP
                   )}
                 </div>
 
-                {/* Technical aspect stamp overlay across footer limits */}
+                {/* Technical aspect stamp overlay */}
                 <div className="absolute bottom-3 left-4 opacity-30 font-mono text-[9px] text-zinc-400 uppercase tracking-widest pointer-events-none group-hover:opacity-70 transition-opacity z-20">
                   {item.title ? `// ${item.title}` : `// CUT_SEQUENCE_${idx.toString().padStart(2, '0')}`}
                 </div>

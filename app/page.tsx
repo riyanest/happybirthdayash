@@ -12,12 +12,12 @@ export default function BirthdayProject() {
     { name: "Mummy", relation: "The Directors of Life", msg: "Mera beta meri hothon ki hansi hai ❤️.", img: "/mummy.jpeg" },
     { name: "Daddy", relation: "The Directors of Life", msg: "Mera beta mere dil ki dhadkan hai.", img: "/Daddy.jpeg" },
     { name: "Usha", relation: "Co-Writer since Day 1", msg: "Having my brother in my life means having a constant source of support, understanding, laughter, and unconditional love shown through gifting rather than words.", img: "/usha.jpeg" },
-    { name: "Sony pinni", relation: "The Joey to my Chandler", msg: "He is my Bodybulider 💪" },
-    { name: "Upendra babay", relation: "The Joey to my Chandler", msg: "You will always be like my own child, and my love and prayers are always with you."},
-    { name: "⁠Raju babay", relation: "The Joey to my Chandler", msg: "Seeing you happy brings happiness to my heart, and I always pray for your success."},
-    { name: "⁠Shridhar babay", relation: "The Joey to my Chandler", msg: "No matter how old you grow, you will always have my love, care, and blessings."},
-    { name: "Shekhar babay", relation: "The Joey to my Chandler", msg: "No matter how old you grow, you will always have my love, care, and blessings."},
-    { name: "Sangeeta pinni", relation: "The Joey to my Chandler", msg: "Your love, kindness, and support make our family stronger every single day."},
+    { name: "Sony pinni", relation: "The Cinephile Crew", msg: "He is my Bodybulider 💪" },
+    { name: "Upendra babay", relation: "The Cinephile Crew", msg: "You will always be like my own child, and my love and prayers are always with you."},
+    { name: "⁠Raju babay", relation: "The Cinephile Crew", msg: "Seeing you happy brings happiness to my heart, and I always pray for your success."},
+    { name: "⁠Shridhar babay", relation: "The Cinephile Crew", msg: "No matter how old you grow, you will always have my love, care, and blessings."},
+    { name: "Shekhar babay", relation: "The Cinephile Crew", msg: "No matter how old you grow, you will always have my love, care, and blessings."},
+    { name: "Sangeeta pinni", relation: "The Cinephile Crew", msg: "Your love, kindness, and support make our family stronger every single day."},
     { name: "Hema pinni", relation: "The Joey to my Chandler", msg: "You always take care of everyone, and we are lucky to have you."},
     { name: "Aruna pinni", relation: "The Cinephile Crew", msg: "You are the biggest support of our family." },
   ];
@@ -43,13 +43,13 @@ export default function BirthdayProject() {
 
   // Video assets parsed into data blocks for the standalone carousel
   const videoShowcaseItems: VideoItem[] = [
-    { id: 'v1', videoUrl: '/feature1.mp4', title: 'UBALE_SCENE_RAW' },
-    { id: 'v2', videoUrl: '/feature2.mp4', title: 'SNEHA_CUT_SCENE' },
-    { id: 'v2', videoUrl: '/feature3.mp4', title: 'SNEHA_CUT_SCENE' },
-    { id: 'v2', videoUrl: '/feature4.mp4', title: 'SNEHA_CUT_SCENE' },
-    { id: 'v2', videoUrl: '/feature5.mp4', title: 'SNEHA_CUT_SCENE' },
-    { id: 'v2', videoUrl: '/feature6.mp4', title: 'SNEHA_CUT_SCENE' },
-    { id: 'v2', videoUrl: '/feature7.mp4', title: 'SNEHA_CUT_SCENE' },
+    { id: 'v1', videoUrl: '/feature1.mp4', title: 'BEHIND_THE_SCENES' },
+    { id: 'v2', videoUrl: '/feature2.mp4', title: 'BEHIND_THE_SCENES' },
+    { id: 'v2', videoUrl: '/feature3.mp4', title: 'BEHIND_THE_SCENES' },
+    { id: 'v2', videoUrl: '/feature4.mp4', title: 'BEHIND_THE_SCENES' },
+    { id: 'v2', videoUrl: '/feature5.mp4', title: 'BEHIND_THE_SCENES' },
+    { id: 'v2', videoUrl: '/feature6.mp4', title: 'BEHIND_THE_SCENES' },
+    { id: 'v2', videoUrl: '/feature7.mp4', title: 'BEHIND_THE_SCENES' },
   ];
 
   return (
