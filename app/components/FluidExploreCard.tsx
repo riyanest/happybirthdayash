@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, Volume2, VolumeX } from 'lucide-react';
+import { MessageCircle, Volume2, VolumeX, Play, Pause } from 'lucide-react';
 import { MessageItem } from '../types';
 
 export default function FluidExploreCard({ item }: { item: MessageItem }) {
   const [isActive, setIsActive] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const isVideo = (url?: string) => {
@@ -16,29 +18,68 @@ export default function FluidExploreCard({ item }: { item: MessageItem }) {
   const hasMedia = !!(item.img && item.img !== '' && item.img !== 'none');
   const hasVideo = hasMedia && isVideo(item.img);
 
-  // Sync state changes to video audio element properties
+  // Sync state changes directly to the native HTML5 Video properties
   useEffect(() => {
     if (videoRef.current && hasVideo) {
-      videoRef.current.muted = !isActive;
+      videoRef.current.muted = isMuted;
     }
-  }, [isActive, hasVideo]);
+  }, [isMuted, hasVideo]);
 
-  const toggleOverlay = () => {
+  useEffect(() => {
+    if (videoRef.current && hasVideo) {
+      if (isPlaying) {
+        videoRef.current.play().catch(() => {
+          // Catch and handle standard browser autoplay block policies safely
+          setIsPlaying(false);
+        });
+      } else {
+        videoRef.current.pause();
+      }
+    }
+  }, [isPlaying, hasVideo]);
+
+  // Main Card interaction handler (Toggles text overlay and pauses/plays video)
+  const handleCardInteraction = () => {
+    if (!hasMedia) return;
     setIsActive(!isActive);
+    if (hasVideo) {
+      setIsPlaying(!isPlaying);
+    }
   };
 
-  // Hover control systems for desktop mice tracking
+  // Dedicated Audio handler (Stops event bubbling up to the main card click)
+  const toggleAudio = (e: React.MouseEvent) => {
+    e.stopPropagation(); 
+    if (hasVideo) {
+      setIsMuted(!isMuted);
+    }
+  };
+
+  // Desktop Hover Controls: Opens overlay, unmutes, and ensures video plays
   const handleMouseEnter = () => {
-    if (hasMedia) setIsActive(true);
+    if (hasMedia) {
+      setIsActive(true);
+      if (hasVideo) {
+        setIsMuted(false);
+        setIsPlaying(true);
+      }
+    }
   };
 
+  // Desktop Hover Leaves: Closes overlay, mutes, and resets playback state
   const handleMouseLeave = () => {
-    if (hasMedia) setIsActive(false);
+    if (hasMedia) {
+      setIsActive(false);
+      if (hasVideo) {
+        setIsMuted(true);
+        setIsPlaying(true); // Loops back smoothly in the background
+      }
+    }
   };
 
   return (
     <div 
-      onClick={hasMedia ? toggleOverlay : undefined}
+      onClick={handleCardInteraction}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={`break-inside-avoid mb-4 group relative rounded-xl overflow-hidden cursor-pointer shadow-md transition-all duration-300 select-none
@@ -59,17 +100,31 @@ export default function FluidExploreCard({ item }: { item: MessageItem }) {
                 className="w-full h-auto object-contain block opacity-90 group-hover:scale-[1.02] transition-all duration-500 ease-out"
                 autoPlay
                 loop
-                muted // Stays default initialized true for mobile autoplay security rules
+                muted={isMuted}
                 playsInline
               />
               
-              {/* Dynamic Audio Indicator: Toggles icons matching whether audio is live or cut */}
-              <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md p-1.5 rounded-md border border-zinc-800/40 text-zinc-400 z-30 transition-colors group-hover:text-[#E5A93C]">
-                {isActive ? (
-                  <Volume2 size={12} className="text-[#E5A93C]" />
-                ) : (
-                  <VolumeX size={12} />
+              {/* Top-Right Control Buttons Container */}
+              <div className="absolute top-3 right-3 flex items-center gap-2 z-30">
+                {/* Play/Pause state tracking visual feedback */}
+                {!isPlaying && (
+                  <div className="bg-black/60 backdrop-blur-md p-1.5 rounded-md border border-zinc-800/40 text-[#E5A93C]">
+                    <Pause size={12} className="fill-current" />
+                  </div>
                 )}
+
+                {/* Explicit Volume Control Button (Works on click for all devices) */}
+                <button 
+                  onClick={toggleAudio}
+                  aria-label={isMuted ? "Unmute video" : "Mute video"}
+                  className="bg-black/60 backdrop-blur-md p-1.5 rounded-md border border-zinc-800/40 text-zinc-400 hover:text-[#E5A93C] transition-colors focus:outline-none"
+                >
+                  {!isMuted ? (
+                    <Volume2 size={12} className="text-[#E5A93C]" />
+                  ) : (
+                    <VolumeX size={12} />
+                  )}
+                </button>
               </div>
             </div>
           ) : (
