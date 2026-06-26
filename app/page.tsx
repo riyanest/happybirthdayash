@@ -28,7 +28,7 @@ export default function BirthdayProject() {
     { name: "Mane", relation: "The Co-Actor in Life", msg: "    We never really had serious conversations, but saying goodbye to you at airport was one of the hardest conversations I had with myself.", img: "/mane.jpeg" },
     { name: "Ubla", relation: "The Co-Actor in Life", msg: "", img: "/ubale.mp4" },
     { name: "Riya", relation: "The Co-Actor in Life", msg: "To the person who feels like home & adventure all at the same time. Cheers to the incredible man that you are!! May this year bring you everything your heart desires, because no one deserves it more than you.", img: "/riya.jpeg" },
-    { name: "Rahul", relation: "The Co-Actor in Life", msg: "Happy Birthday, Yash! (Mashked)🎉 Wishing you an amazing day filled with happiness, laughter, and great memories. You’re not just a friend, you’re like family always there, always supportive, and always bringing good vibes. I’m really lucky to have you as my best friend. May this year bring you success, good health, and everything you’ve been working for. Let’s keep making more unforgettable moments together. 🚗✨", img: "/rawul.jpeg" },
+    { name: "Rahul", relation: "The Co-Actor in Life", msg: "Happy Birthday, Yash! (Mashked)🎉 Wishing you an amazing day filled with happiness, laughter, and great memories. You’re not just a friend, you’re like family always there, always supportive, and always bringing good vibes. I’m really lucky to have you as my best friend. May this year bring you success, good health, and everything you’ve been working for. Let’s keep making more unforgettable moments together. 🚗✨", img: "/rahul.jpeg" },
     { name: "Deepak", relation: "The Co-Actor in Life", msg: "    Having Yash in my life 🤔 It feels pretty good 😌 having him in my life bcs i know whenever life gives me a kick 🦵he will be there next to me 👬 It feels pretty good 😌 to have him in my life bcs i know whenever i need money 💰 he would lend me a hand 🫲 It feels pretty good 😌 having him in my life bcs i know whenever i need to talk to someone 🗣️, he will be there to listen👂 It feels pretty good 😌 having him in my life bcs i know whenever i need to drink 🍺and have fun 😎, u will be beside me with a bottle in ur hand 🍻 Happy Birthday ra Yash 🎉🎂🎁",img:"/deepak.jpeg" },
     { name: "Kartik", relation: "The Co-Actor in Life", msg: "Happy birthday, you magnificent silly fellow!", img: "/kartik.jpeg" },
     { name: "Ravi", relation: "The Cinephile Crew", msg: "Thanks for coming into my life man, because of you I again started drinking alcohol sulliga and from there my progress is lost. It’s fine we made lot of good memories together and hope we make some more memories in the future. Stop thinking a lot and start speaking out. I can’t say much in my text. I can only express my feelings in the text for my girlfriend. So this is what  I got in my mind for you. Happy birthday ganduu hope you achieve everything in the life you wanted tooo ❤️🫂", img: "/ravi.jpeg" },
@@ -38,7 +38,7 @@ export default function BirthdayProject() {
     { name: "Shamita", relation: "The Co-Actor in Life", msg: "Having yash in my life is like behind the scene cameras that catches me at my embarrassing moments🤣", img: "/shamita.jpeg" },
     { name: "AAshka", relation: "The Co-Actor in Life", msg: "Having Yash in my life is basically like having an older brother that you just keep fighting with and bantering with. Always making fun of each other and playfully fighting but deep down we also know that we can always rely on each other 🥰🫶🏻", img: "/aashka.jpeg" },
     { name: "Sneha", relation: "The Co-Actor in Life", msg: "", img: "/sneha.mp4" },
-    { name: "Gracey", relation: "The Co-Actor in Life", msg: "", img: "/gracey.jpeg" },
+    { name: "Gracey", relation: "The Co-Actor in Life", msg: "Happy MeowDay Yash!! Stop attacking me and I will stop hiding from you come back soon I meowishh youu!!", img: "/gracey.jpeg" },
   ];
 
   // Video assets parsed into data blocks for the standalone carousel
@@ -49,6 +49,7 @@ export default function BirthdayProject() {
     { id: 'v2', videoUrl: '/feature4.mp4', title: 'SNEHA_CUT_SCENE' },
     { id: 'v2', videoUrl: '/feature5.mp4', title: 'SNEHA_CUT_SCENE' },
     { id: 'v2', videoUrl: '/feature6.mp4', title: 'SNEHA_CUT_SCENE' },
+    { id: 'v2', videoUrl: '/feature7.mp4', title: 'SNEHA_CUT_SCENE' },
   ];
 
   return (
