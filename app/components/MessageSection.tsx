@@ -8,7 +8,7 @@ interface MessageSectionProps {
   subtitle: string;
   actLabel: string;
   Icon: LucideIcon;
-  messages: MessageItem[];
+  messages?: MessageItem[]; // Made optional with '?' to stay safe
   alignRight?: boolean;
 }
 
@@ -17,9 +17,26 @@ export default function MessageSection({
   subtitle, 
   actLabel, 
   Icon, 
-  messages, 
+  messages = [], // 👈 Defaults to an empty array if undefined or missing
   alignRight = false 
 }: MessageSectionProps) {
+  
+  // Safe distribution logic using safe guarding parameters
+  const getColumns = (items: MessageItem[]) => {
+    const cols: MessageItem[][] = [[], [], []];
+    
+    // Double check that items exists and is an array before looping
+    if (Array.isArray(items)) {
+      items.forEach((item, index) => {
+        cols[index % 3].push(item);
+      });
+    }
+    
+    return cols;
+  };
+
+  const columns = getColumns(messages);
+
   return (
     <section className="py-24 max-w-6xl mx-auto px-4 md:px-8">
       <div className={`mb-12 text-center ${alignRight ? 'md:text-right' : 'md:text-left'}`}>
@@ -32,9 +49,13 @@ export default function MessageSection({
         <p className="text-zinc-500 text-sm mt-2 font-mono">{subtitle}</p>
       </div>
 
-      <div className="columns-1 sm:columns-2 md:columns-3 gap-4 custom-masonry-wrapper">
-        {messages.map((item, index) => (
-          <FluidExploreCard key={index} item={item} />
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 items-start">
+        {columns.map((colItems, colIdx) => (
+          <div key={`masonry-col-${colIdx}`} className="flex flex-col gap-4">
+            {colItems?.map((item, itemIdx) => (
+              <FluidExploreCard key={`item-${colIdx}-${itemIdx}`} item={item} />
+            ))}
+          </div>
         ))}
       </div>
     </section>

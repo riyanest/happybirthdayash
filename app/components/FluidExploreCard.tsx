@@ -1,61 +1,119 @@
-import React from 'react';
+"use client"; // 👈 Add this exact string directive at line 1
+
+import React, { useState } from 'react';
 import { MessageCircle, Play } from 'lucide-react';
 import { MessageItem } from '../types';
 
 export default function FluidExploreCard({ item }: { item: MessageItem }) {
+  const [isActive, setIsActive] = useState(false);
+
   // Helper function to check if the file path points to a video format
   const isVideo = (url: string) => {
     return /\.(mp4|webm|ogg|mov|m4v)($|\?)/i.test(url);
   };
 
-  const hasVideo = isVideo(item.img);
+  // Check if a valid media asset exists
+  const hasMedia = item.img && item.img !== '' && item.img !== 'none';
+  const hasVideo = hasMedia && isVideo(item.img);
+
+  const toggleOverlay = () => {
+    setIsActive(!isActive);
+  };
 
   return (
-    <div className="break-inside-avoid mb-4 group relative rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800/80 cursor-pointer shadow-md transition-all duration-300 hover:border-[#E5A93C]/40">
+    <div 
+      onClick={hasMedia ? toggleOverlay : undefined}
+      className={`break-inside-avoid mb-4 group relative rounded-xl overflow-hidden cursor-pointer shadow-md transition-all duration-300 select-none
+        ${hasMedia 
+          ? 'bg-zinc-900 border border-zinc-800/80 hover:border-[#E5A93C]/40' 
+          : 'bg-gradient-to-br from-zinc-900/90 via-zinc-900 to-zinc-950 border border-zinc-800 p-6 min-h-[220px] flex flex-col justify-between hover:border-[#E5A93C]/30'
+        }`}
+    >
       
-      {/* Dynamic Asset Selector: Renders Video or Image seamlessly */}
-      {hasVideo ? (
-        <div className="w-full relative">
-          <video 
-            src={item.img}
-            className="w-full h-auto object-contain block opacity-90 group-hover:scale-[1.02] transition-all duration-500 ease-out"
-            autoPlay
-            loop
-            muted
-            playsInline
-          />
-          {/* Subtle Video Indicator badge matching Instagram's video identifier placement */}
-          <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md p-1.5 rounded-md border border-zinc-800/40 text-zinc-400 z-10 group-hover:opacity-0 transition-opacity duration-300">
-            <Play size={10} className="fill-current" />
+      {/* --- CONDITION 1: HAS IMAGE OR VIDEO --- */}
+      {hasMedia ? (
+        <>
+          {hasVideo ? (
+            <div className="w-full relative">
+              <video 
+                src={item.img}
+                className="w-full h-auto object-contain block opacity-90 group-hover:scale-[1.02] transition-all duration-500 ease-out"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+              <div className={`absolute top-3 right-3 bg-black/60 backdrop-blur-md p-1.5 rounded-md border border-zinc-800/40 text-zinc-400 z-10 transition-opacity duration-300 ${isActive ? 'opacity-0' : 'group-hover:opacity-0'}`}>
+                <Play size={10} className="fill-current" />
+              </div>
+            </div>
+          ) : (
+            <img 
+              src={item.img} 
+              alt={item.name} 
+              className="w-full h-auto object-contain block opacity-90 group-hover:scale-[1.02] transition-all duration-500 ease-out" 
+            />
+          )}
+
+          {/* Floating Slate Label Tag */}
+          <div className={`absolute top-3 left-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-md text-[10px] font-mono tracking-widest text-[#E5A93C] uppercase border border-zinc-800/60 z-10 transition-opacity duration-300 ${isActive ? 'opacity-0' : 'group-hover:opacity-0'}`}>
+            {item.name}
           </div>
-        </div>
+
+          {/* Slide-Up Overlay (Desktop Hover + Mobile Tap Compatible) */}
+          <div 
+            className={`absolute inset-0 bg-gradient-to-t from-black via-black/95 to-black/30 transition-all duration-300 flex flex-col justify-end p-5 z-20
+              ${isActive 
+                ? 'opacity-100 pointer-events-auto' 
+                : 'opacity-0 pointer-events-none md:group-hover:opacity-100 md:group-hover:pointer-events-auto'
+              }`}
+          >
+            <div className={`transition-transform duration-300 ${isActive ? 'translate-y-0' : 'transform translate-y-3 md:group-hover:translate-y-0'}`}>
+              <span className="text-[9px] text-[#E5A93C] font-mono uppercase tracking-widest block mb-0.5">
+                {item.relation}
+              </span>
+              <h4 className="text-lg font-bold text-white tracking-tight flex items-center gap-1.5">
+                {item.name} <MessageCircle size={14} className="text-zinc-500" />
+              </h4>
+              <p className="text-xs text-zinc-300 font-light mt-1.5 leading-relaxed italic">
+                "{item.msg}"
+              </p>
+            </div>
+          </div>
+        </>
       ) : (
-        <img 
-          src={item.img} 
-          alt={item.name} 
-          className="w-full h-auto object-contain block opacity-90 group-hover:scale-[1.02] transition-all duration-500 ease-out" 
-        />
+        /* --- CONDITION 2: TEXT ONLY (Cinematic Script Card Layout) --- */
+        <>
+          {/* Header Metadata Block */}
+          <div className="w-full flex items-start justify-between">
+            <div>
+              <span className="text-[9px] text-[#E5A93C] font-mono uppercase tracking-widest block mb-0.5">
+                {item.relation}
+              </span>
+              <h4 className="text-base font-bold text-white tracking-tight flex items-center gap-1.5">
+                {item.name}
+              </h4>
+            </div>
+            <div className="bg-zinc-800/60 p-1.5 rounded-md border border-zinc-700/50 text-zinc-500 group-hover:text-[#E5A93C] transition-colors duration-300">
+              <MessageCircle size={12} />
+            </div>
+          </div>
+
+          {/* Main Typography Area */}
+          <div className="my-6 relative pl-4 border-l-2 border-[#E5A93C]/40">
+            <p className="text-sm text-zinc-200 font-light leading-relaxed italic font-serif">
+              "{item.msg}"
+            </p>
+          </div>
+
+          {/* Technical Production Slating */}
+          <div className="w-full flex justify-between items-center opacity-40 font-mono text-[9px] text-zinc-500 uppercase tracking-wider group-hover:opacity-80 transition-opacity duration-300">
+            <span>// SCENE_CUE</span>
+            <span>24_FPS</span>
+          </div>
+        </>
       )}
 
-      {/* Floating Slate Label Tag */}
-      <div className="absolute top-3 left-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-md text-[10px] font-mono tracking-widest text-[#E5A93C] uppercase border border-zinc-800/60 z-10 group-hover:opacity-0 transition-opacity duration-300">
-        {item.name}
-      </div>
-
-      {/* Slide-Up Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/95 to-black/30 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-end p-5 z-20">
-        <div className="transform translate-y-3 group-hover:translate-y-0 transition-transform duration-300">
-          <span className="text-[9px] text-[#E5A93C] font-mono uppercase tracking-widest block mb-0.5">
-            {item.relation}
-          </span>
-          <h4 className="text-lg font-bold text-white tracking-tight flex items-center gap-1.5">
-            {item.name} <MessageCircle size={14} className="text-zinc-500" />
-          </h4>
-          <p className="text-xs text-zinc-300 font-light mt-1.5 leading-relaxed italic">
-            "{item.msg}"
-          </p>
-        </div>
-      </div>
     </div>
   );
 }
