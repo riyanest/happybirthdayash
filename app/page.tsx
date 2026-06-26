@@ -1,10 +1,11 @@
 import React from 'react';
 import { Heart, Users } from 'lucide-react';
-import { MessageItem } from './types';
+import { MessageItem, VideoItem } from './types';
 import HeroBanner from './components/HeroBanner';
 import IntermissionDivider from './components/IntermissionDivider';
 import MessageSection from './components/MessageSection';
 import TextMarquee from './components/TextMarquee'; // Import your new carousel
+import FeaturedVideoCarousel from './components/FeaturedVideoCarousel'; // Import the video showcase carousel
 
 export default function BirthdayProject() {
   const familyMessages: MessageItem[] = [
@@ -22,13 +23,12 @@ export default function BirthdayProject() {
   ];
 
   const friendMessages: MessageItem[] = [
-
     { name: "Nitish", relation: "The Co-Actor In Life", msg: "Having Punna in my life is like having a Joey to my Chandler because I can always count on him 🥰 and also because he is the dumb one", img: "/friend1.jpeg" },
     { name: "Viraj", relation: "The Co-Actor in Life", msg: "Aata ha motha houn surya honar ka?? A personal cure for depression. Whenever I feel low/depressed, I call him. For a moment I just let go of my worries, listen to his stories and enter the magical world of Punna. He's not my friend, he's my brother♥️", img: "/viraj.jpeg" },
     { name: "Mane", relation: "The Co-Actor in Life", msg: "    We never really had serious conversations, but saying goodbye to you at airport was one of the hardest conversations I had with myself.", img: "/mane.jpeg" },
-        { name: "Ubla", relation: "The Co-Actor in Life", msg: "", img: "/ubale.mp4" },
-   { name: "Riya", relation: "The Co-Actor in Life", msg: "To the person who feels like home & adventure all at the same time. Cheers to the incredible man that you are!! May this year bring you everything your heart desires, because no one deserves it more than you.", img: "/riya.jpeg" },
-    { name: "Rahul", relation: "The Co-Actor in Life", msg: "Happy Birthday, Yash! (Mashked)🎉 Wishing you an amazing day filled with happiness, laughter, and great memories. You’re not just a friend, you’re like family always there, always supportive, and always bringing good vibes. I’m really lucky to have you as my best friend. May this year bring you success, good health, and everything you’ve been working for. Let’s keep making more unforgettable moments together. 🚗✨", img: "/rahul.jpeg" },
+    { name: "Ubla", relation: "The Co-Actor in Life", msg: "", img: "/ubale.mp4" },
+    { name: "Riya", relation: "The Co-Actor in Life", msg: "To the person who feels like home & adventure all at the same time. Cheers to the incredible man that you are!! May this year bring you everything your heart desires, because no one deserves it more than you.", img: "/riya.jpeg" },
+    { name: "Rahul", relation: "The Co-Actor in Life", msg: "Happy Birthday, Yash! (Mashked)🎉 Wishing you an amazing day filled with happiness, laughter, and great memories. You’re not just a friend, you’re like family always there, always supportive, and always bringing good vibes. I’m really lucky to have you as my best friend. May this year bring you success, good health, and everything you’ve been working for. Let’s keep making more unforgettable moments together. 🚗✨", img: "/rawul.jpeg" },
     { name: "Deepak", relation: "The Co-Actor in Life", msg: "    Having Yash in my life 🤔 It feels pretty good 😌 having him in my life bcs i know whenever life gives me a kick 🦵he will be there next to me 👬 It feels pretty good 😌 to have him in my life bcs i know whenever i need money 💰 he would lend me a hand 🫲 It feels pretty good 😌 having him in my life bcs i know whenever i need to talk to someone 🗣️, he will be there to listen👂 It feels pretty good 😌 having him in my life bcs i know whenever i need to drink 🍺and have fun 😎, u will be beside me with a bottle in ur hand 🍻 Happy Birthday ra Yash 🎉🎂🎁",img:"/deepak.jpeg" },
     { name: "Kartik", relation: "The Co-Actor in Life", msg: "Happy birthday, you magnificent silly fellow!", img: "/kartik.jpeg" },
     { name: "Ravi", relation: "The Cinephile Crew", msg: "Thanks for coming into my life man, because of you I again started drinking alcohol sulliga and from there my progress is lost. It’s fine we made lot of good memories together and hope we make some more memories in the future. Stop thinking a lot and start speaking out. I can’t say much in my text. I can only express my feelings in the text for my girlfriend. So this is what  I got in my mind for you. Happy birthday ganduu hope you achieve everything in the life you wanted tooo ❤️🫂", img: "/ravi.jpeg" },
@@ -39,6 +39,16 @@ export default function BirthdayProject() {
     { name: "AAshka", relation: "The Co-Actor in Life", msg: "Having Yash in my life is basically like having an older brother that you just keep fighting with and bantering with. Always making fun of each other and playfully fighting but deep down we also know that we can always rely on each other 🥰🫶🏻", img: "/aashka.jpeg" },
     { name: "Sneha", relation: "The Co-Actor in Life", msg: "", img: "/sneha.mp4" },
     { name: "Gracey", relation: "The Co-Actor in Life", msg: "", img: "/gracey.jpeg" },
+  ];
+
+  // Video assets parsed into data blocks for the standalone carousel
+  const videoShowcaseItems: VideoItem[] = [
+    { id: 'v1', videoUrl: '/feature1.mp4', title: 'UBALE_SCENE_RAW' },
+    { id: 'v2', videoUrl: '/feature2.mp4', title: 'SNEHA_CUT_SCENE' },
+    { id: 'v2', videoUrl: '/feature3.mp4', title: 'SNEHA_CUT_SCENE' },
+    { id: 'v2', videoUrl: '/feature4.mp4', title: 'SNEHA_CUT_SCENE' },
+    { id: 'v2', videoUrl: '/feature5.mp4', title: 'SNEHA_CUT_SCENE' },
+    { id: 'v2', videoUrl: '/feature6.mp4', title: 'SNEHA_CUT_SCENE' },
   ];
 
   return (
@@ -60,11 +70,12 @@ export default function BirthdayProject() {
         title="The One Where Ordinary Days Became Stories"
         subtitle="// Co-stars, plot twists, and late-night edits"
         actLabel="ACT II"
-        Icon={Heart}
+        Icon={Users}
         messages={friendMessages}
       />
 
-
+      {/* NEW COMPONENT ADDED: Pure Video Showcase Carousel */}
+      <FeaturedVideoCarousel videos={videoShowcaseItems} />
 
       <footer className="border-t border-zinc-900 bg-black py-12 text-center text-xs text-zinc-600 font-mono tracking-widest">
         <p>© 2026 YASH PRODUCTION. ALL RIGHTS RESERVED.</p>
