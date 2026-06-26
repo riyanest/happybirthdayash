@@ -1,4 +1,4 @@
-"use client"; // 👈 Add this exact string directive at line 1
+"use client";
 
 import React, { useState } from 'react';
 import { MessageCircle, Play } from 'lucide-react';
@@ -7,13 +7,14 @@ import { MessageItem } from '../types';
 export default function FluidExploreCard({ item }: { item: MessageItem }) {
   const [isActive, setIsActive] = useState(false);
 
-  // Helper function to check if the file path points to a video format
-  const isVideo = (url: string) => {
+  // 1. Update the helper function to accept undefined safely
+  const isVideo = (url?: string) => {
+    if (!url) return false;
     return /\.(mp4|webm|ogg|mov|m4v)($|\?)/i.test(url);
   };
 
-  // Check if a valid media asset exists
-  const hasMedia = item.img && item.img !== '' && item.img !== 'none';
+  // 2. Safely compute your media presence flags
+  const hasMedia = !!(item.img && item.img !== '' && item.img !== 'none');
   const hasVideo = hasMedia && isVideo(item.img);
 
   const toggleOverlay = () => {
