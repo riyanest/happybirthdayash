@@ -1,8 +1,16 @@
 import React from 'react';
 import { Film, Clapperboard, Heart, Users, Camera, MessageCircle } from 'lucide-react';
 
+// 1. Define TypeScript interface for message items
+interface MessageItem {
+  name: string;
+  relation: string;
+  msg: string;
+  img: string;
+}
+
 export default function BirthdayProject() {
-  const familyMessages = [
+  const familyMessages: MessageItem[] = [
     { 
       name: "Mummy", 
       relation: "The Directors of Life", 
@@ -21,49 +29,49 @@ export default function BirthdayProject() {
       msg: "Mera beta mere dil ki dhadkan hai.", 
       img: "/Daddy.jpeg"
     },
-        { 
+    { 
       name: "Friend", 
       relation: "The Co-Actor In Life", 
-      msg: "    Having Punna in my life is like having a Joey to my Chandler because I can always count on him 🥰 and also because he is the dumb one", 
+      msg: "Having Punna in my life is like having a Joey to my Chandler because I can always count on him 🥰 and also because he is the dumb one", 
       img: "/friend1.jpeg"
     },
-            { 
+    { 
       name: "Sakshi", 
       relation: "The Co-Actor in Life", 
       msg: "I’d say uyi amma!! But trust me having you was like getting the older brother I never had,annoying at times but somehow always there at the right time 🫶🏻🫶🏻Happy Birthday yassshhh!!", 
       img: "/sakshi.jpeg"
     },
-                { 
+    { 
       name: "Kartik", 
       relation: "The Co-Actor in Life", 
       msg: "Happy birthday, you magnificent silly fellow!", 
       img: "/kartik.jpeg"
     },
-                    { 
+    { 
       name: "Payal", 
       relation: "The Co-Actor in Life", 
-      msg: "    Yash somehow manages to be annoying and dependable at the same time.", 
+      msg: "Yash somehow manages to be annoying and dependable at the same time.", 
       img: "/payal.jpeg"
     },
-                        { 
+    { 
       name: "Payal", 
       relation: "The Co-Actor in Life", 
-      msg: "    Yash somehow manages to be annoying and dependable at the same time.", 
+      msg: "Yash somehow manages to be annoying and dependable at the same time.", 
       img: "/payal.jpeg"
     },
-                            { 
+    { 
       name: "Shamita", 
       relation: "The Co-Actor in Life", 
       msg: "Having yash in my life is like behind the scene cameras that catches me at my embarrassing moments🤣", 
       img: "/shamita.jpeg"
     },
-                                { 
+    { 
       name: "Viraj", 
       relation: "The Co-Actor in Life", 
       msg: "Aata ha motha houn surya honar ka?? A personal cure for depression. Whenever I feel low/depressed, I call him. For a moment I just let go of my worries, listen to his stories and enter the magical world of Punna. He's not my friend, he's my brother♥️", 
       img: "/viraj.jpeg"
     },
-                                    { 
+    { 
       name: "AAshka", 
       relation: "The Co-Actor in Life", 
       msg: "Having Yash in my life is basically like having an older brother that you just keep fighting with and bantering with. Always making fun of each other and playfully fighting but deep down we also know that we can always rely on each other 🥰🫶🏻", 
@@ -71,7 +79,7 @@ export default function BirthdayProject() {
     },
   ];
 
-  const friendMessages = [
+  const friendMessages: MessageItem[] = [
     { 
       name: "Rahul", 
       relation: "The Joey to my Chandler", 
@@ -86,11 +94,10 @@ export default function BirthdayProject() {
     },
   ];
 
-  // Reusable component that resizes naturally to image dimension configurations
-  const FluidExploreCard = ({ item }) => (
+  // 2. Explicitly type the item prop to satisfy the production compiler build
+  const FluidExploreCard = ({ item }: { item: MessageItem }) => (
     <div className="break-inside-avoid mb-4 group relative rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800/80 cursor-pointer shadow-md transition-all duration-300 hover:border-[#E5A93C]/40">
       
-      {/* Notice h-auto instead of h-full: this preserves the precise ratio of your photo layout */}
       <img 
         src={item.img} 
         alt={item.name} 
@@ -173,7 +180,6 @@ export default function BirthdayProject() {
           <p className="text-zinc-500 text-sm mt-2 font-mono">// The foundation, the anchor, the core cast</p>
         </div>
 
-        {/* Dynamic Multi-Column Layout: Columns handle alternating image heights natively */}
         <div className="columns-1 sm:columns-2 md:columns-3 gap-4 custom-masonry-wrapper">
           {familyMessages.map((item, index) => (
             <FluidExploreCard key={index} item={item} />
@@ -212,7 +218,6 @@ export default function BirthdayProject() {
           <p className="text-zinc-500 text-sm mt-2 font-mono">// Co-stars, plot twists, and late-night edits</p>
         </div>
 
-        {/* Friends Dynamic Multi-Column Layout */}
         <div className="columns-1 sm:columns-2 md:columns-3 gap-4 custom-masonry-wrapper">
           {friendMessages.map((item, index) => (
             <FluidExploreCard key={index} item={item} />
